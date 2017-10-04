@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { graphql } from 'react-apollo';
+import { graphql, gql } from 'react-apollo';
 import Placeholder from 'rn-placeholder';
 
 import FeedCardHeader from './FeedCardHeader';
@@ -74,6 +74,24 @@ function FeedCard({
     </Root>
   );
 }
+
+FeedCard.fragments = {
+  tweet: gql`
+    fragment FeedCard on Tweet {
+      text
+      _id
+      createdAt
+      isFavorited
+      favoriteCount
+      user {
+        username
+        avatar
+        lastName
+        firstName
+      }
+    }
+  `,
+};
 
 export default graphql(FAVORITE_TWEET_MUTATION, {
   props: ({ ownProps, mutate }) => ({

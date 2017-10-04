@@ -58,7 +58,12 @@ export default {
       await requireAuth(user);
       const tweet = await Tweet.create({ ...args, user: user._id });
 
-      pubsub.publish(TWEET_ADDED, { [TWEET_ADDED]: tweet });
+      const t = tweet.toJSON();
+
+      pubsub.publish(TWEET_ADDED, { [TWEET_ADDED]: {
+        ...t,
+        isFavorited: false,
+      } });
 
       return tweet;
     } catch (error) {
