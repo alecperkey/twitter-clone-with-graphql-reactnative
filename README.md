@@ -1278,6 +1278,21 @@ export default {
 };
 ```
 
+Our GraphiQL query to signup a new user and receive the token is:
+
+```
+mutation {
+  signup(
+    email: "alecperkey@gmail.com", 
+    fullName: "alec perkey", 
+    password: "pass1234"
+  )
+  {
+    token
+  }
+}
+```
+
 ---
 
 
