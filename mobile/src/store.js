@@ -8,13 +8,15 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 
+import { REACT_NATIVE_PACKAGER_HOSTNAME } from './utils/constants';
 import reducers from './reducers';
 
 const networkInterface = createNetworkInterface({
-  uri: 'http://localhost:3000/graphql',
+  uri: `http://${REACT_NATIVE_PACKAGER_HOSTNAME}:3000/graphql`,
 });
 
-const wsClient = new SubscriptionClient('ws://localhost:3000/subscriptions', {
+const wsClient = new SubscriptionClient(
+  `ws://${REACT_NATIVE_PACKAGER_HOSTNAME}:3000/subscriptions`, {
   reconnect: true,
   connectionParams: {}
 })
