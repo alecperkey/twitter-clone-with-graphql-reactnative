@@ -26,7 +26,7 @@ const Input = styled.TextInput.attrs({
   multiline: true,
   placeholder: "What's happening?",
   maxLength: 140,
-  selectionColor: Platform.OS === 'ios' && colors.PRIMARY,
+  selectionColor: Platform.OS === 'ios' && colors.PRIMARY || colors.PRIMARY,
   autoFocus: true,
 })`
   height: 40%;

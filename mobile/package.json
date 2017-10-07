@@ -6,7 +6,9 @@
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'"
+    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=19001'",
+    "dev": "exp start --lan",
+    "a": "exp android"
   },
   "dependencies": {
     "@appandflow/touchable": "^1.1.1",

@@ -1,0 +1,46 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "taskName": "Start Server",
+            "type": "shell",
+            "command": "./scripts/start_server.sh",
+            "windows": {
+                "command": ".\\scripts\\start_server.cmd"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "taskName": "Exp Start Lan",
+            "type": "shell",
+            "command": "./scripts/exp_start_lan.sh",
+            "windows": {
+                "command": ".\\scripts\\exp_start_lan.cmd"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "taskName": "Exp Android",
+            "type": "shell",
+            "command": "./scripts/exp_android.sh",
+            "windows": {
+                "command": ".\\scripts\\exp_android.cmd"
+            },
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+    ]
+}
