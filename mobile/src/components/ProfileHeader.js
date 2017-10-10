@@ -58,7 +58,7 @@ const MetaBox = styled.View`
 const MetaText = styled.Text`
   color: ${props => props.theme.SECONDARY};
   fontSize: 16;
-  fontWeight: 600;
+  fontWeight: 400;
 `;
 
 const MetaTextNumber = styled.Text`color: ${props => props.theme.PRIMARY};`;
@@ -80,12 +80,17 @@ export default function ProfileHeader({ firstName, lastName, avatar, username}) 
       <MetaContainer>
         <MetaBox>
           <MetaText>
-            <MetaTextNumber>3</MetaTextNumber> tweets
+            <MetaTextNumber>314</MetaTextNumber> posts
           </MetaText>
         </MetaBox>
         <MetaBox>
           <MetaText>
-            <MetaTextNumber>3</MetaTextNumber> likes
+            <MetaTextNumber>2053</MetaTextNumber> favorites
+          </MetaText>
+        </MetaBox>
+        <MetaBox>
+          <MetaText>
+            <MetaTextNumber>45</MetaTextNumber> connections
           </MetaText>
         </MetaBox>
       </MetaContainer>

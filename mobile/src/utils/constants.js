@@ -5,6 +5,20 @@ export const colors = {
   LIGHT_GRAY: '#CAD0D6',
 };
 
+export const language = {
+  MY_FEED: 'Youniverse',
+  FOLLOWING_FEED: 'Universe',
+  FOLLOWER_LIST: 'Your Connections',
+  DM_INBOX: 'Private Nods',
+  COMPOSE_DM: 'Create and share a positive message',
+  COMPOSE_POST: 'Create and share a positive message',
+  POST: 'Nod',
+  PROFILE: 'Profile',
+  PODCAST_FEED: 'Podcasts',
+  MY_SETTINGS: 'Settings',
+  NOTIFICATIONS: 'Notifications',
+};
+
 export const fakeAvatar = 'https://pbs.twimg.com/profile_images/835144746217664515/oxBgzjRA_bigger.jpg';
 
 

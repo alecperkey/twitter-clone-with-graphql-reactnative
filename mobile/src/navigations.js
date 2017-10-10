@@ -6,7 +6,7 @@ import {
 } from 'react-navigation';
 import { Keyboard } from 'react-native';
 import { connect } from 'react-redux';
-import { FontAwesome, SimpleLineIcons, EvilIcons } from '@expo/vector-icons';
+import { FontAwesome, SimpleLineIcons, EvilIcons, Ionicons } from '@expo/vector-icons';
 
 import HomeScreen from './screens/HomeScreen';
 import ExploreScreen from './screens/ExploreScreen';
@@ -14,11 +14,12 @@ import NotificationsScreen from './screens/NotificationsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import AuthenticationScreen from './screens/AuthenticationScreen';
 import NewTweetScreen from './screens/NewTweetScreen';
+import NewDMScreen from './screens/NewDMScreen';
 
 import HeaderAvatar from './components/HeaderAvatar';
 import ButtonHeader from './components/ButtonHeader';
 
-import { colors } from './utils/constants';
+import { colors, language } from './utils/constants';
 
 const TAB_ICON_SIZE = 20;
 
@@ -27,33 +28,34 @@ const Tabs = TabNavigator(
     Home: {
       screen: HomeScreen,
       navigationOptions: () => ({
-        headerTitle: 'Home',
+        headerTitle: language.FOLLOWING_FEED,
         tabBarIcon: ({ tintColor }) =>
-          <FontAwesome size={TAB_ICON_SIZE} color={tintColor} name="home" />,
-      }),
-    },
-    Explore: {
-      screen: ExploreScreen,
-      navigationOptions: () => ({
-        headerTitle: 'Explore',
-        tabBarIcon: ({ tintColor }) =>
-          <FontAwesome size={TAB_ICON_SIZE} color={tintColor} name="search" />,
-      }),
-    },
-    Notifications: {
-      screen: NotificationsScreen,
-      navigationOptions: () => ({
-        headerTitle: 'Notifications',
-        tabBarIcon: ({ tintColor }) =>
-          <FontAwesome size={TAB_ICON_SIZE} color={tintColor} name="bell" />,
+          // <FontAwesome size={TAB_ICON_SIZE} color={tintColor} name="md-planet" />,
+          <Ionicons size={TAB_ICON_SIZE} color={tintColor} name="md-planet" />,
       }),
     },
     Profile: {
       screen: ProfileScreen,
       navigationOptions: () => ({
-        headerTitle: 'Profile',
+        headerTitle: language.MY_FEED,
         tabBarIcon: ({ tintColor }) =>
           <FontAwesome size={TAB_ICON_SIZE} color={tintColor} name="user" />,
+      }),
+    },
+    Notifications: {
+      screen: NotificationsScreen,
+      navigationOptions: () => ({
+        headerTitle: language.NOTIFICATIONS,
+        tabBarIcon: ({ tintColor }) =>
+          <FontAwesome size={TAB_ICON_SIZE} color={tintColor} name="bell" />,
+      }),
+    },
+    Explore: {
+      screen: ExploreScreen,
+      navigationOptions: () => ({
+        headerTitle: language.DM_INBOX,
+        tabBarIcon: ({ tintColor }) =>
+          <FontAwesome size={TAB_ICON_SIZE} color={tintColor} name="search" />,
       }),
     },
   },
@@ -80,6 +82,33 @@ const NewTweetModal = StackNavigator(
     NewTweet: {
       screen: NewTweetScreen,
       navigationOptions: ({ navigation }) => ({
+        headerTitle: language.COMPOSE_POST,
+        headerLeft: <HeaderAvatar />,
+        headerRight: (
+          <ButtonHeader
+            side="right"
+            onPress={() => {
+              Keyboard.dismiss();
+              navigation.goBack(null);
+            }}
+          >
+            <EvilIcons color={colors.PRIMARY} size={25} name="close" />
+          </ButtonHeader>
+        ),
+      }),
+    },
+  },
+  {
+    headerMode: 'none',
+  },
+);
+
+const NewDMModal = StackNavigator(
+  {
+    NewTweet: {
+      screen: NewDMScreen,
+      navigationOptions: ({ navigation }) => ({
+        headerTitle: language.COMPOSE_DMT,
         headerLeft: <HeaderAvatar />,
         headerRight: (
           <ButtonHeader
@@ -109,7 +138,16 @@ const AppMainNav = StackNavigator(
         headerRight: (
           <ButtonHeader
             side="right"
-            onPress={() => navigation.navigate('NewTweet')}
+            onPress={() => {
+              if (navigation.state.index === 0){
+                return navigation.navigate('NewTweet')
+              } else if (navigation.state.index === 3){
+                return navigation.navigate('NewDM')
+              } else {
+              return navigation.navigate('Home')
+              }
+            }
+          }
           >
             <SimpleLineIcons color={colors.PRIMARY} size={20} name="pencil" />
           </ButtonHeader>
@@ -118,6 +156,9 @@ const AppMainNav = StackNavigator(
     },
     NewTweet: {
       screen: NewTweetModal,
+    },
+    NewDM: {
+      screen: NewDMModal,
     },
   },
   {

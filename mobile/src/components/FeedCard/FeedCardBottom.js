@@ -19,7 +19,7 @@ const Button = styled(Touchable).attrs({
   flexDirection: row;
   alignItems: center;
   justifyContent: space-around;
-  paddingHorizontal: 32px;
+  paddingHorizontal: 60px;
 `;
 
 const ButtonText = styled.Text`
@@ -38,13 +38,7 @@ function FeedCardBottom({ favoriteCount, onFavoritePress, isFavorited }) {
           color={colors.LIGHT_GRAY}
         />
         <ButtonText>
-          0
-        </ButtonText>
-      </Button>
-      <Button>
-        <Entypo name="retweet" color={colors.LIGHT_GRAY} size={ICON_SIZE} />
-        <ButtonText>
-          0
+          1
         </ButtonText>
       </Button>
       <Button onPress={onFavoritePress}>
