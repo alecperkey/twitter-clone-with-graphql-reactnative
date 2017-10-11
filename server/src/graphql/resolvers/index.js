@@ -2,6 +2,7 @@ import GraphQLDate from 'graphql-date';
 
 import TweetResolvers from './tweet-resolvers';
 import UserResolvers from './user-resolvers';
+import DMResolvers from './dm-resolvers';
 import User from '../../models/User';
 
 export default {
@@ -13,10 +14,13 @@ export default {
     getTweet: TweetResolvers.getTweet,
     getTweets: TweetResolvers.getTweets,
     getUserTweets: TweetResolvers.getUserTweets,
+    getDM: DMResolvers.getDM,
+    getUserAuthoredDMs: DMResolvers.getUserAuthoredDMs,
     me: UserResolvers.me
   },
   Mutation: {
     createTweet: TweetResolvers.createTweet,
+    createDM: DMResolvers.createDM,
     updateTweet: TweetResolvers.updateTweet,
     deleteTweet: TweetResolvers.deleteTweet,
     favoriteTweet: TweetResolvers.favoriteTweet,
@@ -25,6 +29,7 @@ export default {
   },
   Subscription: {
     tweetAdded: TweetResolvers.tweetAdded,
+    DMAdded: DMResolvers.DMAdded,
     tweetFavorited: TweetResolvers.tweetFavorited
   }
 };

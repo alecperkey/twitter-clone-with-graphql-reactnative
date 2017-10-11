@@ -25,7 +25,7 @@ export default {
       const tweetsToSend = tweets.reduce((arr, tweet) => {
         const tw = tweet.toJSON();
 
-        if (favorites.tweets.some(t => t.equals(tweet._id))) {
+        if (favorites && favorites.tweets.some(t => t.equals(tweet._id))) {
           arr.push({
             ...tw,
             isFavorited: true,

@@ -83,6 +83,9 @@ const NewTweetModal = StackNavigator(
       screen: NewTweetScreen,
       navigationOptions: ({ navigation }) => ({
         headerTitle: language.COMPOSE_POST,
+        headerTitleStyle: {
+          color: "#000000",
+        },
         headerLeft: <HeaderAvatar />,
         headerRight: (
           <ButtonHeader
@@ -108,7 +111,10 @@ const NewDMModal = StackNavigator(
     NewTweet: {
       screen: NewDMScreen,
       navigationOptions: ({ navigation }) => ({
-        headerTitle: language.COMPOSE_DMT,
+        headerTitle: language.COMPOSE_DM,
+        headerTitleStyle: {
+          color: "#000000",
+        },
         headerLeft: <HeaderAvatar />,
         headerRight: (
           <ButtonHeader

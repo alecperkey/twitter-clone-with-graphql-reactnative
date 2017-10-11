@@ -5,7 +5,7 @@ import Touchable from '@appandflow/touchable';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 
-import { colors } from '../utils/constants';
+import { colors, language } from '../utils/constants';
 import CREATE_TWEET_MUTATION from '../graphql/mutations/createTweet';
 import GET_TWEETS_QUERY from '../graphql/queries/getTweets';
 
@@ -108,7 +108,7 @@ class NewDMScreen extends Component {
   }
 
   get _textLength() {
-    return 140 - this.state.text.length;
+    return this.state.text.length;
   }
 
   get _buttonDisabled() {
@@ -124,7 +124,7 @@ class NewDMScreen extends Component {
             {this._textLength}
           </TextLength>
           <TweetButton onPress={this._onCreateTweetPress} disabled={this._buttonDisabled}>
-            <TweetButtonText>Tweet</TweetButtonText>
+            <TweetButtonText>{`${language.SEND_DM}`}</TweetButtonText>
           </TweetButton>
         </Wrapper>
       </Root>
