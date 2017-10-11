@@ -10,6 +10,10 @@ export default {
   Tweet: {
     user: ({ user }) => User.findById(user),
   },
+  DM: {
+    author: ({ author }) => User.findById(author),
+    recipient: ({ recipient }) => User.findById(recipient)
+  },
   Query: {
     getTweet: TweetResolvers.getTweet,
     getTweets: TweetResolvers.getTweets,
