@@ -2,7 +2,7 @@ import GraphQLDate from 'graphql-date';
 
 import TweetResolvers from './tweet-resolvers';
 import UserResolvers from './user-resolvers';
-import DMResolvers from './dm-resolvers';
+import MessageResolvers from './message-resolvers';
 import User from '../../models/User';
 
 export default {
@@ -10,7 +10,7 @@ export default {
   Tweet: {
     user: ({ user }) => User.findById(user),
   },
-  DM: {
+  Message: {
     author: ({ author }) => User.findById(author),
     recipient: ({ recipient }) => User.findById(recipient)
   },
@@ -18,13 +18,13 @@ export default {
     getTweet: TweetResolvers.getTweet,
     getTweets: TweetResolvers.getTweets,
     getUserTweets: TweetResolvers.getUserTweets,
-    getDM: DMResolvers.getDM,
-    getUserAuthoredDMs: DMResolvers.getUserAuthoredDMs,
+    getMessage: MessageResolvers.getMessage,
+    getUserAuthoredMessages: MessageResolvers.getUserAuthoredMessages,
     me: UserResolvers.me
   },
   Mutation: {
     createTweet: TweetResolvers.createTweet,
-    createDM: DMResolvers.createDM,
+    createMessage: MessageResolvers.createMessage,
     updateTweet: TweetResolvers.updateTweet,
     deleteTweet: TweetResolvers.deleteTweet,
     favoriteTweet: TweetResolvers.favoriteTweet,
@@ -33,7 +33,7 @@ export default {
   },
   Subscription: {
     tweetAdded: TweetResolvers.tweetAdded,
-    DMAdded: DMResolvers.DMAdded,
+    MessageAdded: MessageResolvers.MessageAdded,
     tweetFavorited: TweetResolvers.tweetFavorited
   }
 };

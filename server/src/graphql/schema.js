@@ -41,7 +41,7 @@ export default `
     updatedAt: Date!
   }
 
-  type DM {
+  type Message {
     _id: ID!
     text: String!
     author: User!
@@ -54,14 +54,14 @@ export default `
     getTweet(_id: ID!): Tweet
     getTweets: [Tweet]
     getUserTweets: [Tweet]
-    getDM(_id: ID!): DM
-    getUserAuthoredDMs: [DM]
+    getMessage(_id: ID!): Message
+    getUserAuthoredMessages: [Message]
     me: Me
   }
 
   type Mutation {
     createTweet(text: String!): Tweet
-    createDM(text: String!): DM
+    createMessage(text: String!): Message
     updateTweet(_id: ID!, text: String): Tweet
     deleteTweet(_id: ID!): Status
     favoriteTweet(_id: ID!): Tweet
@@ -71,7 +71,7 @@ export default `
 
   type Subscription {
     tweetAdded: Tweet
-    DMAdded: DM
+    MessageAdded: Message
     tweetFavorited: Tweet
   }
 

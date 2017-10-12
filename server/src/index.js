@@ -45,7 +45,7 @@ app.use(
 
 const graphQLServer = createServer(app);
 
-mocks().then(() => {
+mocks.createUsers().then(mocks.createConversations().then(() => {
   graphQLServer.listen(constants.PORT, err => {
     if (err) {
       console.error(err);
@@ -62,4 +62,4 @@ mocks().then(() => {
       console.log(`App listen to port: ${constants.PORT}`);
     }
   });
-});
+}));
