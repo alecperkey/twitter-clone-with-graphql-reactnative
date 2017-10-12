@@ -7,7 +7,9 @@ import { connect } from 'react-redux';
 
 import { colors } from '../utils/constants';
 import CREATE_TWEET_MUTATION from '../graphql/mutations/createTweet';
+import FAVORITE_TWEET_MUTATION from '../graphql/mutations/favoriteTweet';
 import GET_TWEETS_QUERY from '../graphql/queries/getTweets';
+import TWEET_FAVORITED_SUBSCRIPTION from '../graphql/subscriptions/tweetFavorited';
 
 const Root = styled.View`
   backgroundColor: ${props => props.theme.WHITE};
@@ -73,7 +75,7 @@ class NewTweetScreen extends Component {
   _onCreateTweetPress = async () => {
     const { user } = this.props;
 
-    await this.props.mutate({
+    const newTweet = await this.props.createTweetMutation({
       variables: {
         text: this.state.text
       },
@@ -101,6 +103,21 @@ class NewTweetScreen extends Component {
           store.writeQuery({ query: GET_TWEETS_QUERY, data: { getTweets: [{ ...createTweet }, ...data.getTweets] } });
         }
       }
+    });
+
+    await this.props.favoriteTweetMutation({
+      variables: { _id: newTweet.data.createTweet._id },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        favoriteTweet: {
+          __typename: 'Tweet',
+          _id: Math.round(Math.random() * -1000000),
+          favoriteCount: newTweet.data.createTweet.isFavorited
+            ? newTweet.data.createTweet.favoriteCount - 1
+            : newTweet.data.createTweet.favoriteCount + 1,
+          isFavorited: !newTweet.data.createTweet.isFavorited,
+        },
+      },
     });
 
     Keyboard.dismiss();
@@ -133,6 +150,7 @@ class NewTweetScreen extends Component {
 }
 
 export default compose(
-  graphql(CREATE_TWEET_MUTATION),
+  graphql(CREATE_TWEET_MUTATION, {name: 'createTweetMutation'}),
+  graphql(FAVORITE_TWEET_MUTATION, {name: 'favoriteTweetMutation'}),
   connect(state => ({ user: state.user.info }))
 )(NewTweetScreen);
