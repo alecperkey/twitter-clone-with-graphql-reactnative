@@ -14,7 +14,7 @@ import NotificationsScreen from './screens/NotificationsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import AuthenticationScreen from './screens/AuthenticationScreen';
 import NewTweetScreen from './screens/NewTweetScreen';
-import NewDMScreen from './screens/NewDMScreen';
+import NewMessageScreen from './screens/NewMessageScreen';
 
 import HeaderAvatar from './components/HeaderAvatar';
 import ButtonHeader from './components/ButtonHeader';
@@ -53,7 +53,7 @@ const Tabs = TabNavigator(
     Explore: {
       screen: ExploreScreen,
       navigationOptions: () => ({
-        headerTitle: language.DM_INBOX,
+        headerTitle: language.MESSAGE_INBOX,
         tabBarIcon: ({ tintColor }) =>
           <FontAwesome size={TAB_ICON_SIZE} color={tintColor} name="search" />,
       }),
@@ -106,12 +106,12 @@ const NewTweetModal = StackNavigator(
   },
 );
 
-const NewDMModal = StackNavigator(
+const NewMessageModal = StackNavigator(
   {
     NewTweet: {
-      screen: NewDMScreen,
+      screen: NewMessageScreen,
       navigationOptions: ({ navigation }) => ({
-        headerTitle: language.COMPOSE_DM,
+        headerTitle: language.COMPOSE_MESSAGE,
         headerTitleStyle: {
           color: "#000000",
         },
@@ -148,7 +148,7 @@ const AppMainNav = StackNavigator(
               if (navigation.state.index === 0){
                 return navigation.navigate('NewTweet')
               } else if (navigation.state.index === 3){
-                return navigation.navigate('NewDM')
+                return navigation.navigate('NewMessage')
               } else {
               return navigation.navigate('Home')
               }
@@ -163,8 +163,8 @@ const AppMainNav = StackNavigator(
     NewTweet: {
       screen: NewTweetModal,
     },
-    NewDM: {
-      screen: NewDMModal,
+    NewMessage: {
+      screen: NewMessageModal,
     },
   },
   {

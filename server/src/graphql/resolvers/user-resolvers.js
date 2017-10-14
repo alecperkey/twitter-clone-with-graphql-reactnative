@@ -1,6 +1,12 @@
+import { pubsub } from '../../config/pubsub';
+
 import User from '../../models/User';
 import FavoriteTweet from '../../models/FavoriteTweet';
+// import UserHasFollowers from '../../models/UserHasFollowers';
+import UserIsFollowing from '../../models/UserIsFollowing';
 import { requireAuth } from '../../services/auth';
+
+export const USER_IS_FOLLOWING = 'userIsFollowingChange';
 
 export default {
   signup: async (_, { fullName, ...rest }) => {
@@ -8,6 +14,8 @@ export default {
       const [firstName, ...lastName] = fullName.split(' ');
       const user = await User.create({ firstName, lastName, ...rest });
       await FavoriteTweet.create({ userId: user._id });
+      // await UserHasFollowers.create({ userId: user._id });
+      await UserIsFollowing.create({ userId: user._id });
 
       return {
         token: user.createToken(),
@@ -46,4 +54,7 @@ export default {
       throw error;
     }
   },
+  userIsFollowingChange: {
+    subscribe: () => pubsub.asyncIterator(USER_IS_FOLLOWING),
+  }
 };

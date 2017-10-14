@@ -40,6 +40,15 @@ UserSchema.methods = {
       constants.JWT_SECRET
     )
   }
-}
+};
+
+UserSchema.statics = {
+  incUserIsFollowingCount(userId) {
+    return this.findByIdAndUpdate(userId, { $inc: { isFollowingCount: 1 } }, { new: true });
+  },
+  decUserIsFollowingCount(userId) {
+    return this.findByIdAndUpdate(userId, { $inc: { isFollowingCount: -1 } }, { new: true });
+  }
+};
 
 export default mongoose.model('User', UserSchema);

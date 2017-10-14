@@ -41,10 +41,19 @@ export default `
     updatedAt: Date!
   }
 
+  type Conversation {
+    _id: ID!
+    sender: User!
+    recipient: User!
+    latestMessage: Message
+    createdAt: Date!
+    updatedAt: Date!
+  }
+
   type Message {
     _id: ID!
     text: String!
-    author: User!
+    sender: User!
     recipient: User!
     createdAt: Date!
     updatedAt: Date!
@@ -54,25 +63,32 @@ export default `
     getTweet(_id: ID!): Tweet
     getTweets: [Tweet]
     getUserTweets: [Tweet]
-    getMessage(_id: ID!): Message
-    getUserAuthoredMessages: [Message]
+
     me: Me
+
+    getConversation(_id: ID!): Conversation
+    getConversationMessages(_id: ID!): [Message]
+    getUserConversations(_id: ID!): [Conversation]
   }
 
   type Mutation {
     createTweet(text: String!): Tweet
-    createMessage(text: String!): Message
     updateTweet(_id: ID!, text: String): Tweet
     deleteTweet(_id: ID!): Status
     favoriteTweet(_id: ID!): Tweet
+
     signup(email: String!, fullName: String!, password: String!, avatar: String, username: String): Auth
     login(email: String!, password: String!): Auth
+
+    createMessage(text: String!): Message
   }
 
   type Subscription {
     tweetAdded: Tweet
-    MessageAdded: Message
     tweetFavorited: Tweet
+    
+    messageAdded: Message
+    conversationAdded: Conversation
   }
 
   schema {

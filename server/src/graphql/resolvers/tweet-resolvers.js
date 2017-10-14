@@ -1,5 +1,6 @@
 import Tweet from '../../models/Tweet';
 import FavoriteTweet from '../../models/FavoriteTweet';
+
 import { requireAuth } from '../../services/auth';
 import { pubsub } from '../../config/pubsub';
 

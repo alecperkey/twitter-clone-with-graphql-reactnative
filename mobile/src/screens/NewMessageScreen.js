@@ -6,8 +6,9 @@ import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 
 import { colors, language } from '../utils/constants';
-import CREATE_TWEET_MUTATION from '../graphql/mutations/createTweet';
-import GET_TWEETS_QUERY from '../graphql/queries/getTweets';
+// import CREATE_CONVERSATION_MUTATION from '../graphql/mutations/createConversation';
+// import CREATE_MESSAGE_MUTATION from '../graphql/mutations/createMessage';
+// import UPDATE_CONVERSATION_MUTATION from '../graphql/mutations/updateConversation';
 
 const Root = styled.View`
   backgroundColor: ${props => props.theme.WHITE};
@@ -63,7 +64,7 @@ const TextLength = styled.Text`
   right: 5%;
 `;
 
-class NewDMScreen extends Component {
+class NewMessageScreen extends Component {
   state = {
     text: '',
   };
@@ -71,37 +72,37 @@ class NewDMScreen extends Component {
   _onChangeText = text => this.setState({ text });
 
   _onCreateTweetPress = async () => {
-    const { user } = this.props;
+    // const { user } = this.props;
 
-    await this.props.mutate({
-      variables: {
-        text: this.state.text
-      },
-      optimisticResponse: {
-        __typename: 'Mutation',
-        createTweet: {
-          __typename: 'Tweet',
-          text: this.state.text,
-          favoriteCount: 0,
-          _id: Math.round(Math.random() * -1000000),
-          createdAt: new Date(),
-          isFavorited: false,
-          user: {
-            __typename: 'User',
-            username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            avatar: user.avatar
-          }
-        },
-      },
-      update: (store, { data: { createTweet } }) => {
-        const data = store.readQuery({ query: GET_TWEETS_QUERY });
-        if (!data.getTweets.find(t => t._id === createTweet._id)) {
-          store.writeQuery({ query: GET_TWEETS_QUERY, data: { getTweets: [{ ...createTweet }, ...data.getTweets] } });
-        }
-      }
-    });
+    // await this.props.mutate({
+    //   variables: {
+    //     text: this.state.text
+    //   },
+    //   optimisticResponse: {
+    //     __typename: 'Mutation',
+    //     createTweet: {
+    //       __typename: 'Tweet',
+    //       text: this.state.text,
+    //       favoriteCount: 0,
+    //       _id: Math.round(Math.random() * -1000000),
+    //       createdAt: new Date(),
+    //       isFavorited: false,
+    //       user: {
+    //         __typename: 'User',
+    //         username: user.username,
+    //         firstName: user.firstName,
+    //         lastName: user.lastName,
+    //         avatar: user.avatar
+    //       }
+    //     },
+    //   },
+    //   update: (store, { data: { createTweet } }) => {
+    //     const data = store.readQuery({ query: GET_TWEETS_QUERY });
+    //     if (!data.getTweets.find(t => t._id === createTweet._id)) {
+    //       store.writeQuery({ query: GET_TWEETS_QUERY, data: { getTweets: [{ ...createTweet }, ...data.getTweets] } });
+    //     }
+    //   }
+    // });
 
     Keyboard.dismiss();
     this.props.navigation.goBack(null);
@@ -124,7 +125,7 @@ class NewDMScreen extends Component {
             {this._textLength}
           </TextLength>
           <TweetButton onPress={this._onCreateTweetPress} disabled={this._buttonDisabled}>
-            <TweetButtonText>{`${language.SEND_DM}`}</TweetButtonText>
+            <TweetButtonText>{`${language.SEND_MESSAGE}`}</TweetButtonText>
           </TweetButton>
         </Wrapper>
       </Root>
@@ -133,6 +134,8 @@ class NewDMScreen extends Component {
 }
 
 export default compose(
-  graphql(CREATE_TWEET_MUTATION),
+  // graphql(CREATE_CONVERSATION_MUTATION, {name: 'createConversation'}),
+  // graphql(CREATE_MESSAGE_MUTATION, {name: 'createMessage'}),
+  // graphql(UPDATE_CONVERSATION_MUTATION, {name: 'updateConversation'}),
   connect(state => ({ user: state.user.info }))
-)(NewDMScreen);
+)(NewMessageScreen);
