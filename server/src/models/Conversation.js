@@ -9,10 +9,20 @@ const CoversationSchema = new Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   },
-  // latestMessage: {
-  //   type: mongoose.Schema.ObjectId,
-  //   ref: 'Message'
-  // },
+  senderFlags: {
+    isFavorited: Boolean,
+    latestMessageUnread: Boolean,
+  },
+  recipientFlags: {
+    isFavorited: Boolean,
+    latestMessageUnread: Boolean,
+  },
+  messageCount: Number,
+  isRandom: Boolean,
+  latestMessage: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Message'
+  },
 }, { timestamps: true });
 
 export default mongoose.model('Conversation', CoversationSchema);

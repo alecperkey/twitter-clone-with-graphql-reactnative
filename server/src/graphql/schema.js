@@ -65,6 +65,7 @@ export default `
     getUserTweets: [Tweet]
 
     me: Me
+    getUserIsFollowing: [User]
 
     getConversation(_id: ID!): Conversation
     getConversationMessages(_id: ID!): [Message]

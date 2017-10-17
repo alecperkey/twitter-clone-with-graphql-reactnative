@@ -1,19 +1,60 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
+import { connect } from 'react-redux';
+import { graphql, compose } from 'react-apollo';
+import { FlatList } from 'react-native';
 
-const Root = styled.View``;
+import ProfileHeader from '../components/ProfileHeader';
+import FollowerCard from '../components/FollowerCard/FollowerCard';
+
+import GET_USER_IS_FOLLOWING_QUERY from '../graphql/queries/getUserIsFollowing';
+
+const Root = styled.View`
+  flex: 1;
+  backgroundColor: #f1f6fa;
+`;
 
 const T = styled.Text``
 
 class ExploreScreen extends Component {
   state = {  }
+
+  _renderItem = ({ item }) => <FollowerCard {...item} />;
+
+  _renderPlaceholder = () => (
+    <FollowerCard
+      placeholder
+      isLoaded={this.props.data.loading}
+    />
+  )
+
   render() {
+    const { info, data } = this.props;
+
     return (
       <Root>
-        <T>Explore</T>
+        <ProfileHeader {...info} />
+        {data.loading ? (
+          <FlatList
+            data={[1, 2, 3]}
+            renderItem={this._renderPlaceholder}
+            keyExtractor={item => item}
+            contentContainerStyle={{ alignSelf: 'stretch' }}
+          />
+        ) : (
+          <FlatList
+            data={data.getUserIsFollowing}
+            renderItem={this._renderItem}
+            keyExtractor={item => item._id}
+            contentContainerStyle={{ alignSelf: 'stretch' }}
+          />
+        )}
       </Root>
     );
   }
 }
 
-export default ExploreScreen;
+export default compose(
+  graphql(GET_USER_IS_FOLLOWING_QUERY),
+  connect(state => ({ info: state.user.info }),
+))(ExploreScreen);

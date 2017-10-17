@@ -20,6 +20,7 @@ export default {
     getUserTweets: TweetResolvers.getUserTweets,
 
     me: UserResolvers.me,
+    getUserIsFollowing: UserResolvers.getUserIsFollowing,
 
     getConversation: ConversationResolvers.getConversation,
     getConversationMessages: ConversationResolvers.getConversationMessages,

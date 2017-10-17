@@ -54,6 +54,36 @@ export default {
       throw error;
     }
   },
+  getUserIsFollowing: async (_, args, { user }) => {
+    try {
+      await requireAuth(user);
+      const p1 = User.find({}).sort({ createdAt: -1 });
+      const p2 = UserIsFollowing.findOne({ userId: user._id });
+      const [allUsers, userIsFollowing] = await Promise.all([p1, p2]);
+
+      const usersToSend = allUsers.reduce((arr, anyUser) => {
+        const userToSend = anyUser.toJSON();
+
+        if (userIsFollowing && userIsFollowing.isFollowing.some(u => u.equals(anyUser._id))) {
+          arr.push({
+            ...userToSend,
+            isFollowing: true,
+          });
+        } else {
+          // arr.push({
+          //   ...userToSend,
+          //   isFollowing: false,
+          // })
+        }
+
+        return arr;
+      }, []);
+
+      return usersToSend;
+    } catch (error) {
+      throw error;
+    }
+  },
   userIsFollowingChange: {
     subscribe: () => pubsub.asyncIterator(USER_IS_FOLLOWING),
   }
