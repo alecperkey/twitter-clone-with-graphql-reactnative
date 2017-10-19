@@ -66,7 +66,8 @@ export default async () => {
         },
         messageCount: 0,
         isRandom: false,
-        latestMessage: null
+        latestMessage: null,
+        latestMessageTimestamp: null
       });
 
       const message = await Message.create({
@@ -78,6 +79,7 @@ export default async () => {
 
       conversation.set({
         latestMessage: message,
+        latestMessageCreatedAt: message.createdAt,
         messageCount: conversation.messageCount + 1
       });
       await conversation.save();
@@ -147,4 +149,7 @@ export default async () => {
  *      [latestNodSender|latestNodReceiver] -> avatar = me/they/universe
  *      [read|unread] -> bold/unbold
  *    
+ * 
+ * 
+ * 
  */

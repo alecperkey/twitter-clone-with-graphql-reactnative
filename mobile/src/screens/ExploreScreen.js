@@ -5,9 +5,10 @@ import { graphql, compose } from 'react-apollo';
 import { FlatList } from 'react-native';
 
 import ProfileHeader from '../components/ProfileHeader';
-import FollowerCard from '../components/FollowerCard/FollowerCard';
+import ConversationCard from '../components/ConversationCard/ConversationCard';
 
-import GET_USER_IS_FOLLOWING_QUERY from '../graphql/queries/getUserIsFollowing';
+// import GET_USER_IS_FOLLOWING_QUERY from '../graphql/queries/getUserIsFollowing';
+import GET_MY_CONVERSATIONS_QUERY from '../graphql/queries/getMyConversations';
 
 const Root = styled.View`
   flex: 1;
@@ -19,10 +20,10 @@ const T = styled.Text``
 class ExploreScreen extends Component {
   state = {  }
 
-  _renderItem = ({ item }) => <FollowerCard {...item} />;
+  _renderItem = ({ item }) => <ConversationCard {...item} />;
 
   _renderPlaceholder = () => (
-    <FollowerCard
+    <ConversationCard
       placeholder
       isLoaded={this.props.data.loading}
     />
@@ -33,7 +34,6 @@ class ExploreScreen extends Component {
 
     return (
       <Root>
-        <ProfileHeader {...info} />
         {data.loading ? (
           <FlatList
             data={[1, 2, 3]}
@@ -43,7 +43,7 @@ class ExploreScreen extends Component {
           />
         ) : (
           <FlatList
-            data={data.getUserIsFollowing}
+            data={data.getMyConversations}
             renderItem={this._renderItem}
             keyExtractor={item => item._id}
             contentContainerStyle={{ alignSelf: 'stretch' }}
@@ -55,6 +55,6 @@ class ExploreScreen extends Component {
 }
 
 export default compose(
-  graphql(GET_USER_IS_FOLLOWING_QUERY),
+  graphql(GET_MY_CONVERSATIONS_QUERY),
   connect(state => ({ info: state.user.info }),
 ))(ExploreScreen);

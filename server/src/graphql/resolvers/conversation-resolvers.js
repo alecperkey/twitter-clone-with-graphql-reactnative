@@ -1,3 +1,4 @@
+import * as lo from 'lodash';
 import Conversation from '../../models/Conversation';
 import Message from '../../models/Message';
 import { requireAuth } from '../../services/auth';
@@ -18,7 +19,51 @@ export default {
   getUserConversations: async (_, args, { user }) => {
     try {
       await requireAuth(user);
-      return Conversation.find({ sender: user._id }).sort({ createdAt: -1 })
+      const p1 = Conversation.find({ sender: user._id });
+      const p2 = Conversation.find({ recipient: user._id });
+      const [sentConversations, receivedConversations] = await Promise.all([p1, p2]);
+      console.log(receivedConversations);
+      return [...sentConversations, ...receivedConversations];
+      // return {sent: sentConversations, received: receivedConversations}
+    } catch (error) {
+      throw error;
+    }
+  },
+  getMyConversations: async (_, args, { user }) => {
+    const formatSenderConversation = c => ({
+      contact: c.recipient,
+      inboxFlags: c.senderFlags,
+      ...c._doc
+    });
+    const formatRecipientConversation = c => ({
+      contact: c.sender,
+      inboxFlags: c.recipientFlags,
+      ...c._doc
+    });
+    try {
+      await requireAuth(user);
+      const p1 = Conversation.find({ sender: user._id });
+      const p2 = Conversation.find({ recipient: user._id });
+      const [sentConversations, receivedConversations] = await Promise.all([p1, p2]);
+      const formattedConversations = [
+        ...(lo.map(sentConversations, formatSenderConversation)),
+        ...(lo.map(receivedConversations, formatRecipientConversation))
+      ];      
+      console.log('@@@@@@@@@@@@');
+      console.log(formattedConversations);
+      const sortedConversations = lo.sortBy(formattedConversations, 'latestMessageCreatedAt');
+      return sortedConversations;
+      // sort by latestMessage.createdAt
+      /**
+       * formatting
+       *  i'm sender: 
+       *    contact = recipient
+       *    inboxFlags = senderFlags
+       *  i'm recipient: 
+       *    contact = sender
+       *    inboxFlags = recipientFlags
+       */
+      // return {sent: sentConversations, received: receivedConversations}
     } catch (error) {
       throw error;
     }

@@ -41,20 +41,46 @@ export default `
     updatedAt: Date!
   }
 
+  type ConversationFlags {
+    isFavorited: Boolean
+    latestMessageUnread: Boolean
+  }
+
   type Conversation {
     _id: ID!
     sender: User!
     recipient: User!
-    latestMessage: Message
+    senderFlags: ConversationFlags!
+    recipientFlags: ConversationFlags!
+    messageCount: Int!
+    isRandom: Boolean!
+    latestMessage: Message!
+    createdAt: Date!
+    updatedAt: Date!
+  }
+
+  type MyConversation {
+    _id: ID!
+    inboxFlags: ConversationFlags!
+    contact: User!
+    sender: User!
+    recipient: User!
+    senderFlags: ConversationFlags!
+    recipientFlags: ConversationFlags!
+    messageCount: Int!
+    isRandom: Boolean!
+    latestMessage: Message!
+    latestMessageCreatedAt: Date!
     createdAt: Date!
     updatedAt: Date!
   }
 
   type Message {
     _id: ID!
-    text: String!
+    conversation: Conversation!
+    content: String!
+    type: String!
     sender: User!
-    recipient: User!
     createdAt: Date!
     updatedAt: Date!
   }
@@ -69,7 +95,8 @@ export default `
 
     getConversation(_id: ID!): Conversation
     getConversationMessages(_id: ID!): [Message]
-    getUserConversations(_id: ID!): [Conversation]
+    getUserConversations: [Conversation]
+    getMyConversations: [MyConversation]
   }
 
   type Mutation {

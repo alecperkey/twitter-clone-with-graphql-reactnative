@@ -19,6 +19,7 @@ const CoversationSchema = new Schema({
   },
   messageCount: Number,
   isRandom: Boolean,
+  latestMessageCreatedAt: Date,
   latestMessage: {
     type: mongoose.Schema.ObjectId,
     ref: 'Message'
