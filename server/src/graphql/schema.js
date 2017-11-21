@@ -109,6 +109,7 @@ export default `
     login(email: String!, password: String!): Auth
 
     createMessage(text: String!): Message
+    createConversation(text: String!): Conversation
   }
 
   type Subscription {
@@ -116,7 +117,7 @@ export default `
     tweetFavorited: Tweet
     
     messageAdded: Message
-    conversationAdded: Conversation
+    conversationAdded: MyConversation
   }
 
   schema {

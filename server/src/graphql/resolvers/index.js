@@ -47,7 +47,8 @@ export default {
     signup: UserResolvers.signup,
     login: UserResolvers.login,
 
-    createMessage: ConversationResolvers.createMessage
+    createMessage: ConversationResolvers.createMessage,
+    createConversation: ConversationResolvers.createConversation
   },
   Subscription: {
     tweetAdded: TweetResolvers.tweetAdded,
